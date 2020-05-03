@@ -10,11 +10,13 @@ import jdk.javadoc.internal.tool.Main;
 
 public class GameDisplay implements Screen {
     private MainGame activity;
-    private int width = 600;
-    private int height = 1000;
+    private GameLogic state;
+    private static final int width = 600;
+    private static final int height = 1000;
     private OrthographicCamera cam = new OrthographicCamera(width, height);
     private Viewport view;
-    public GameDisplay(MainGame game) {
+    public GameDisplay(final MainGame game) {
+        this.state = new GameLogic();
         this.activity = game;
         cam.setToOrtho(false, width, height);
         view = new FitViewport(width, height, cam);
@@ -25,14 +27,18 @@ public class GameDisplay implements Screen {
 
     }
     @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public void render(final float delta) {
+        cam.update();
+        view.apply();
 
+        state.update(delta);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        state.draw(width, height, cam);
     }
     @Override
-    public void resize(int w, int h) {
-
+    public void resize(final int w, final int h) {
+        view.update(width, height);
     }
     @Override
     public void pause() {
