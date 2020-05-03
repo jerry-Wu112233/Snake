@@ -17,7 +17,7 @@ public class MainGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		this.setScreen(new GameDisplay(this));
 	}
 
 
@@ -25,6 +25,6 @@ public class MainGame extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+
 	}
 }

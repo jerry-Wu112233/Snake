@@ -3,8 +3,11 @@ package personal.jerry.snakegame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import jdk.javadoc.internal.tool.Main;
 
 public class GameDisplay implements Screen {
+    private Main activity;
+
     @Override
     public void show() {
 
@@ -16,7 +19,7 @@ public class GameDisplay implements Screen {
 
     }
     @Override
-    public void resize(int wid, int hei) {
+    public void resize(int w, int h) {
 
     }
     @Override
