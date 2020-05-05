@@ -8,7 +8,7 @@ public class Apples {
     public Apples() {
         generateRandomApple();
     }
-    private void generateRandomApple() {
+    public void generateRandomApple() {
         appleXCoordinate = MathUtils.random(GameLogic.boardDimension - 1);
         getAppleYCoordinate = MathUtils.random(GameLogic.boardDimension - 1);
     }
@@ -16,7 +16,7 @@ public class Apples {
         return appleXCoordinate;
     }
 
-    public int getGetAppleYCoordinate() {
+    public int getAppleYCoordinate() {
         return getAppleYCoordinate;
     }
 }

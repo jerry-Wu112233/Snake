@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.LinkedList;
 
+import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.exit;
+
 public class GameLogic {
     /* The amount of squares within the game board; currently set to 35x35. */
     public static final int boardDimension = 35;
@@ -18,25 +20,48 @@ public class GameLogic {
     private float clock = 0;
     /* instance of game control */
     private GameControl control = new GameControl();
+    /* length of the snake */
+    private int snakeSize;
+    /* generates an instance of the apples class */
+    private Apples apple = new Apples();
 
     /**
      * Creates a snake of length 2 as the game starts
      */
     public GameLogic() {
         //Creates a tail and a head
+        snakeSize = 2;
         snake.addLast(new SnakeBody(13, 13)); //tail
         snake.addFirst(new SnakeBody(13, 12)); //head
     }
 
+    /**
+     * update the gameState every timeConstant
+     * @param timeConstant the interval that game updates itself
+     */
     public void reNewGameState(final float timeConstant) {
         clock += timeConstant;
-        // the clock > .15f adjusts the speed of the snake
-        if (clock > .15f) {
+        // the clock > .11f adjusts the speed of the snake
+        if (clock > .11f) {
             clock = 0;
             move();
         }
     }
 
+    /**
+     * Helper method
+     * @return whether or not the coordinates are the same
+     */
+    public boolean positionEquals(SnakeBody snakeHead, Apples apple) {
+        int x1 = snakeHead.getBodyXcoordinate();
+        int y1 = snakeHead.getBodyYcoordinate();
+        int x2 = apple.getAppleXCoordinate();
+        int y2 = apple.getAppleYCoordinate();
+        if (x1 == x2 && y1 == y2) {
+            return true;
+        }
+        return false;
+    }
     /**
      * Helper method
      * @return the SnakeBody object of the head
@@ -53,6 +78,21 @@ public class GameLogic {
         int headYCoordinate = getSnakeHead().getBodyYcoordinate();
         int direction = control.retrieveDirection();
         addBody(direction, headXcoordinate, headYCoordinate);
+        // determines if the location of the apple is reasonable
+        boolean flag = false;
+        if (positionEquals(getSnakeHead(), apple)) {
+            apple.generateRandomApple();
+            while(!flag) {
+                for (SnakeBody body : snake) {
+                    if (positionEquals(body, apple)) {
+                        apple.generateRandomApple();
+                        break;
+                    }
+                }
+                flag = true;
+            }
+            snakeSize++;
+        }
         snake.removeLast();
     }
 
@@ -101,6 +141,7 @@ public class GameLogic {
             rendered.rect(part.getBodyXcoordinate() * scaleSnake,
                     part.getBodyYcoordinate() * scaleSnake + yOffset, scaleSnake, scaleSnake);
         }
+        rendered.rect(apple.getAppleXCoordinate() * scaleSnake, apple.getAppleYCoordinate() * scaleSnake + yOffset, scaleSnake, scaleSnake);
         rendered.end();
     }
 }
