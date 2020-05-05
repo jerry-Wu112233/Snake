@@ -49,7 +49,7 @@ public class GameLogic {
     }
 
     /**
-     * Helper method
+     * Helper method to check whether position equals for apple.
      * @return whether or not the coordinates are the same
      */
     public boolean positionEquals(SnakeBody snakeHead, Apples apple) {
@@ -62,14 +62,31 @@ public class GameLogic {
         }
         return false;
     }
+
     /**
-     * Helper method
+     * Helper method to check whether position equals for apple.
+     * @return whether or not the coordinates are the same
+     */
+    public boolean positionEquals(SnakeBody snakeHead, SnakeBody tempSnakeBody) {
+        int x1 = snakeHead.getBodyXcoordinate();
+        int y1 = snakeHead.getBodyYcoordinate();
+        int x2 = tempSnakeBody.getBodyXcoordinate();
+        int y2 = tempSnakeBody.getBodyYcoordinate();
+        if (x1 == x2 && y1 == y2) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Helper method to retrieve the snake's head position
      * @return the SnakeBody object of the head
      */
     public SnakeBody getSnakeHead() {
         return snake.getFirst();
     }
     /**
+     *
      * Adds an appropriate square into the new snake head
      * The last square that is at the end of the snake's body will be removed.
      */
@@ -78,16 +95,36 @@ public class GameLogic {
         int headYCoordinate = getSnakeHead().getBodyYcoordinate();
         int direction = control.retrieveDirection();
         addBody(direction, headXcoordinate, headYCoordinate);
-        // determines if the location of the apple is reasonable
-        if (positionEquals(getSnakeHead(), apple)) {
-            apple.generateRandomApple();
-            while (inSnake()) {
+        //determines whether the snake head collides with the snake body
+        if (!hasCollided()) {
+            // determines if the location of the apple is reasonable
+            if (positionEquals(getSnakeHead(), apple)) {
                 apple.generateRandomApple();
-                inSnake();
+                while (inSnake()) {
+                    apple.generateRandomApple();
+                    inSnake();
+                }
+                snakeSize++;
             }
-            snakeSize++;
+            snake.removeLast();
+        } else {
+            for (int i = 0; i < snakeSize - 2; i++) {
+                snake.removeLast();
+            }
         }
-        snake.removeLast();
+    }
+
+    /**
+     * Helper function to check whether the snake has collided with itself.
+     * @return - Whether the snake has collided or not.
+     */
+    public boolean hasCollided() {
+        for (SnakeBody body : snake) {
+            if (positionEquals(body, getSnakeHead())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
