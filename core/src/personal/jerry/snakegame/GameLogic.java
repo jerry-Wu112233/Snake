@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class GameLogic {
     /* The amount of squares within the game board; currently set to 35x35. */
-    private static final int boardDimension = 35;
+    public static final int boardDimension = 35;
     /* The amount of offset the game board is displaced from the bottom */
     private static final int yOffset = 400;
     /* Created the ShapeRendered to be able to draw out shapes */
