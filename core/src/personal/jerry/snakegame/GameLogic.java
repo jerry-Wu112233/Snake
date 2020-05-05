@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.util.LinkedList;
 
 import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.exit;
+/**
+ * UI inspired by the guide https://www.instructables.com/id/How-to-Make-an-Android-Game-Snake/
+ */
 
 public class GameLogic {
     /* The amount of squares within the game board; currently set to 35x35. */
@@ -34,7 +37,6 @@ public class GameLogic {
         snake.addLast(new SnakeBody(13, 13)); //tail
         snake.addFirst(new SnakeBody(13, 12)); //head
     }
-
     /**
      * update the gameState every timeConstant
      * @param timeConstant the interval that game updates itself

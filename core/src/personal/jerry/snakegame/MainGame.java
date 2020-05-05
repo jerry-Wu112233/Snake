@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * UI inspired by the guide https://www.instructables.com/id/How-to-Make-an-Android-Game-Snake/
+ */
 public class MainGame extends Game {
 	SpriteBatch batch;
 	@Override
