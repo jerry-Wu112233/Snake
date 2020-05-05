@@ -39,7 +39,7 @@ public class GameDisplay implements Screen {
         cam.update();
         view.apply();
 
-        state.update(timeConstant);
+        state.reNewGameState(timeConstant);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //draws the outline of the board
