@@ -11,9 +11,9 @@ public class GameDisplay implements Screen {
     private MainGame activity;
     private GameLogic state;
     /* The width for the dimension of the game screen. */
-    private static final int boardWidth = 400;
+    private static final int boardWidth = 600;
     /* The height for the dimension of the game screen. */
-    private static final int boardHeight = 1200;
+    private static final int boardHeight = 1000;
     /* set up the orthographic camera so the graphics can be projected onto the screen in 2D. */
     private OrthographicCamera cam = new OrthographicCamera(boardWidth, boardHeight);
     private Viewport view;

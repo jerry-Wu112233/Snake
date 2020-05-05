@@ -79,11 +79,14 @@ public class GameLogic {
         int direction = control.retrieveDirection();
         addBody(direction, headXcoordinate, headYCoordinate);
         // determines if the location of the apple is reasonable
-        while(inSnake()) {
+        if (positionEquals(getSnakeHead(), apple)) {
             apple.generateRandomApple();
-            inSnake();
+            while (inSnake()) {
+                apple.generateRandomApple();
+                inSnake();
+            }
+            snakeSize++;
         }
-        snakeSize++;
         snake.removeLast();
     }
 
