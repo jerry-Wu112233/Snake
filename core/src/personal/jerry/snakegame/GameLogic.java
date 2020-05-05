@@ -79,21 +79,25 @@ public class GameLogic {
         int direction = control.retrieveDirection();
         addBody(direction, headXcoordinate, headYCoordinate);
         // determines if the location of the apple is reasonable
-        boolean flag = false;
-        if (positionEquals(getSnakeHead(), apple)) {
+        while(inSnake()) {
             apple.generateRandomApple();
-            while(!flag) {
-                for (SnakeBody body : snake) {
-                    if (positionEquals(body, apple)) {
-                        apple.generateRandomApple();
-                        break;
-                    }
-                }
-                flag = true;
-            }
-            snakeSize++;
+            inSnake();
         }
+        snakeSize++;
         snake.removeLast();
+    }
+
+    /**
+     * Helper function that checks whether the spawned apple is within the snake's body.
+     * @return - Whether the apple is inside or not.
+     */
+    public boolean inSnake() {
+        for (SnakeBody body : snake) {
+            if (positionEquals(body, apple)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
